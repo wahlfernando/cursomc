@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.faw.cursomc.domain.enuns.TipoCliente;
 
 @Entity
@@ -29,11 +30,10 @@ public class Cliente implements Serializable{
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-	//coleção de estings associada a Cliente
-	//Usando o "Set" temos a garantia de que não vai se repetir os dados
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
@@ -41,7 +41,6 @@ public class Cliente implements Serializable{
 	public Cliente() {}
 
 	public Cliente(Integer id, String nome, String ermail, String cpfOuCnpj, TipoCliente tipo) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.ermail = ermail;
